@@ -128,11 +128,14 @@ app.use((req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📡 Environment: ${process.env.NODE_ENV}`);
-  console.log('✨ Server updated with Gemini 2.0 Flash support');
-});
+
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`📡 Environment: ${process.env.NODE_ENV}`);
+    console.log('✨ Server updated with Gemini 2.0 Flash support');
+  });
+}
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
