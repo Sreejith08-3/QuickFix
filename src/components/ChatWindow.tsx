@@ -98,7 +98,7 @@ export const ChatWindow = ({ bookingId, recipientId, recipientName, recipientAva
     };
 
     return (
-        <Card className="fixed bottom-4 right-4 w-80 md:w-96 h-[500px] flex flex-col shadow-2xl z-50 animate-in slide-in-from-bottom-10">
+        <Card className="fixed bottom-0 right-0 md:bottom-4 md:right-4 w-full md:w-96 h-[80vh] md:h-[500px] flex flex-col shadow-2xl z-50 animate-in slide-in-from-bottom-10 rounded-t-xl md:rounded-xl">
             <CardHeader className="p-4 border-b bg-primary text-primary-foreground rounded-t-lg flex flex-row items-center justify-between">
                 <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8 border-2 border-white/20">

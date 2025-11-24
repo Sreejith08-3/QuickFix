@@ -80,7 +80,7 @@ const Dashboard = () => {
         </div>
 
         <Tabs defaultValue="bookings" className="space-y-6">
-          <TabsList>
+          <TabsList className="w-full justify-start overflow-x-auto">
             <TabsTrigger value="bookings">My Bookings</TabsTrigger>
             <TabsTrigger value="profile">Profile</TabsTrigger>
             <TabsTrigger value="notifications">Notifications</TabsTrigger>

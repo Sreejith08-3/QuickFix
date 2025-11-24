@@ -6,11 +6,46 @@ import { TechnicianCard } from '@/components/TechnicianCard';
 import { mockTechnicians } from '@/lib/mockData';
 import { AlertCircle, MapPin, Clock, CheckCircle } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
-
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
+import { api } from '@/lib/api';
 const Emergency = () => {
   const [step, setStep] = useState<'detecting' | 'matching' | 'found'>('detecting');
   const [progress, setProgress] = useState(0);
   const [nearestTechnician, setNearestTechnician] = useState(mockTechnicians[0]);
+  const [isBooking, setIsBooking] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleEmergencyBooking = async () => {
+    setIsBooking(true);
+    try {
+      await api.post('/bookings', {
+        technicianId: nearestTechnician.id,
+        serviceCategory: 'Emergency',
+        description: 'Emergency Service Request',
+        scheduledDate: new Date().toISOString(),
+        location: 'Current Location', // In a real app, use actual coordinates
+        estimatedCost: 500
+      });
+
+      toast({
+        title: 'Emergency Booking Confirmed',
+        description: 'Help is on the way!',
+      });
+
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Booking failed:', error);
+      toast({
+        title: 'Booking Failed',
+        description: 'Could not confirm booking. Please try calling.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsBooking(false);
+    }
+  };
 
   useEffect(() => {
     // Simulate location detection and matching
@@ -117,8 +152,8 @@ const Emergency = () => {
                 <TechnicianCard technician={nearestTechnician} />
 
                 <div className="flex gap-4">
-                  <Button className="flex-1" size="lg">
-                    Confirm Emergency Booking
+                  <Button className="flex-1" size="lg" onClick={handleEmergencyBooking} disabled={isBooking}>
+                    {isBooking ? 'Confirming...' : 'Confirm Emergency Booking'}
                   </Button>
                   <Button variant="outline" size="lg">
                     Call Technician
