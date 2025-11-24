@@ -28,7 +28,7 @@ interface ChatWindowProps {
     onClose: () => void;
 }
 
-const SOCKET_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5001';
+const SOCKET_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || (import.meta.env.MODE === 'development' ? 'http://localhost:5001' : '/');
 
 export const ChatWindow = ({ bookingId, recipientId, recipientName, recipientAvatar, onClose }: ChatWindowProps) => {
     const { user } = useAuth();
@@ -146,8 +146,8 @@ export const ChatWindow = ({ bookingId, recipientId, recipientName, recipientAva
                                         )}
                                         <div
                                             className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${isMe
-                                                    ? 'bg-primary text-primary-foreground rounded-br-none'
-                                                    : 'bg-muted text-foreground rounded-bl-none'
+                                                ? 'bg-primary text-primary-foreground rounded-br-none'
+                                                : 'bg-muted text-foreground rounded-bl-none'
                                                 }`}
                                         >
                                             <p>{msg.message}</p>
